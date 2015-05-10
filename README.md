@@ -3,8 +3,8 @@ pureHaxe
 ========
 
 This library, `pureHaxe`, is aimed to help you to write very strict pure functions in Haxe. It does two things: 
-	* adds some sugar
-	* strictly checks functions for purity.
+* adds some sugar
+* strictly checks functions for purity.
 	
 How to enable
 =============
