@@ -16,9 +16,8 @@ class OnGeneratePure {
 		Pure.dumpWarnings();
 	}
 	var warnings:Array<Warning>;
-	function warn(msg:Dynamic, pos:Position) {
+	function warn(msg:Dynamic, pos:Position) 
 		Pure.warn(msg, pos);
-	}
 	function dumpWarnings() {
 		if (warnings.length > 0) {
 				for (w in warnings)
@@ -46,14 +45,12 @@ class OnGeneratePure {
 	function hTypeA(a) 	Lambda.iter(a, hType);
 
 	
-	function hType(t:Type) {
-		//warn(Std.string(t), Context.currentPos());
+	function hType(t:Type) 
 		switch (t) {
 			case TInst(c, _):
 				hClass(c.get());
 			case _:
 		}
-	}
 	function hClass(c:ClassType) {
 				// Iterate over all member fields.
 				for (cf in c.fields.get()) {
@@ -69,13 +66,12 @@ class OnGeneratePure {
 				}
 	}
 	
-	function metaHasPure(m:MetaAccess) {
+	function metaHasPure(m:MetaAccess) 
 		return m.has(Pure.pureStr1) || m.has(Pure.pureStr2);
-	}
-	 
-	function hField(cf:ClassField) {
 		
-		if (metaHasPure(cf.meta)) {
+		
+	function hField(cf:ClassField) 
+		if (metaHasPure(cf.meta)) 
 			switch(cf.type) {
 				case TFun(args, ret):
 					//warn(Std.string(cf.name)+', kind:'+Std.string(cf.kind), cf.pos);
@@ -87,8 +83,8 @@ class OnGeneratePure {
 				default:
 					warn('only functions can be pure, but this is not a function', cf.pos);
 			}
-		}
-	}
+		
+	
 	function hFunc(f:TFunc) {
 		for (a in f.args)
 			hVar(a.v);
@@ -104,10 +100,14 @@ class OnGeneratePure {
 		hType(v.t);
 	}
 	var currentE:TypedExpr;
-	function hParam(p:TypeParameter) {		hType(p.t);	}
-	function hFields(fields:Array<{name:String, expr:TypedExpr}>){ for (f in fields) hExpr(f.expr); }
-	function hParamArr(p:Array<TypeParameter>) {		Lambda.iter(p, hParam);	}
-	function hExprA(a:Array<TypedExpr>) {		Lambda.iter(a, hExpr);	}
+	function hParam(p:TypeParameter) 		
+		hType(p.t);	
+	function hFields(fields:Array<{name:String, expr:TypedExpr}>) 
+		for (f in fields) hExpr(f.expr); 
+	function hParamArr(p:Array<TypeParameter>) 		
+		Lambda.iter(p, hParam);	
+	function hExprA(a:Array<TypedExpr>) 		
+		Lambda.iter(a, hExpr);	
 	function hExpr(E:TypedExpr) {	
 		if (E == null) return;
 		currentE = E;
@@ -163,22 +163,8 @@ class OnGeneratePure {
 	function handleBinop(E:TypedExpr, callE:TypedExpr, callE2:Array<TypedExpr>) {
 		
 	}
-	
-/*	function handleCall(E:TypedExpr, callE:TypedExpr, callE2:Array<TypedExpr>) {
-				//warn('callE ' + Std.string(callE), E.pos);					
-		switch(callE.expr) {
-			case TField(e, fa): 
-				handleTField(callE, e, fa);
-			//case TLocal(v):
-				//warn('TLocal! ' + Std.string(v), E.pos);	
-			default:
-		}
-		
-	}*/
-	
-	
+
 	function handleTField(E:TypedExpr, e:TypedExpr, fa:FieldAccess) {
-		//warn('fa: ' + E.t, E.pos);
 		switch(E.t) {
 			case TFun(args, ret):
 				switch(fa) {
@@ -202,29 +188,9 @@ class OnGeneratePure {
 		}
 	}
 	
-	function noCyclesWarn(E:TypedExpr) {
-				warn('You cannot use cycles in pure functions.', E.pos);	
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	function noCyclesWarn(E:TypedExpr) 
+		warn('You cannot use cycles in pure functions.', E.pos);	
+
 	
 }
 
