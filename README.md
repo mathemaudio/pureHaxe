@@ -56,8 +56,8 @@ package pure ;
 		var dt = Date.fromTime(580447733345); /// ok, Date.fromTime is pure too
 		var mi = dt.getFullYear() * lala; /// also ok, making immutable from pure and immutable
 		var rand = Math.random(1.3); /// STOPS COMPILATION compilation with "Math.random doesn't look pure"
-		var a = cannotUse * 2; /// STOPS COMPILATION with "You cannot use mutable variables from outsise"
-		var b = canUse * 4; /// ok, using outside inline (const) var. If it was mutable, it would stop.
+		var a = cannotUse * 2; /// STOPS COMPILATION with "You cannot use mutable variables from outside"
+		var b = canUse * 4; /// ok, using outside inline (const) var. If it'd been mutable, it would've stoped.
 		var c = OtherTest.mutableVar; /// STOPS COMPILATION with "You cannot use mutable variables from outsise"
 		var hash = haxe.crypto.Md5.encode('yo!'); /// alright, Md5.emcode is pure
 		lala = 34; /// STOPS COMPILATION with "you cannot reassign vars in pure functions
@@ -65,18 +65,18 @@ package pure ;
 		res *= 34;/// STOPS COMPILATION, again was trying to set immutable
 		res = 33; /// this one too
 		switch(res){
-			case 2.2: a = 44; /// STOPS COMPILATION, this one cannot compile!
-			default: b = 23; /// STOPS COMPILATION, yeaaahh!!!
+			case 2.2: a = 44; /// STOPS COMPILATION, "a" cannot be changed
+			default: b = 23; /// STOPS COMPILATION, "b" cannot be changed
 		}
 		return a; /// STOPS COMPILATION with "do not use "return" keyword, the last expression will return anyway
 		for (i in 0...100) var h = 2;/// STOPS COMPILATION with "You cannot use cycles in pure functions"
 		while (a == 3) var h = 3;/// STOPS COMPILATION, can't use cycles!
-		var no = false;
-		var o = switch(no) {
-			case false: 34;
-			default: 88;
+		var no = false; /// ok
+		var o = switch(no) { /// ok
+			case false: 34; /// ok
+			default: 88; /// ok
 		}
-		o/1000*mi; /// the last expression is returned without "return" word, because pure functions must return something, why bother with "return" keyword?
+		o/1000*mi; /// the last expression is returned without any "return" word.
 	}
 	static var cannotUse = 23; /// declaring mutable var for tests.
 	static inline var canUse = 33; /// declaring immutable
