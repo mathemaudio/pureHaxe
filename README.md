@@ -18,7 +18,7 @@ How to enable
 
 * Put `@pure` or `@p` meta tag before your pure function, like 
 ```javascript
-@pure function doSomething(a:Float, b:Float){...}`
+@pure function doSomething(a:Float, b:Float){...}
 ```
 
 What should happen then
@@ -35,6 +35,8 @@ Each pure functions will:
 
 Example
 =======
+
+![result](https://raw.githubusercontent.com/shalmu/pureHaxe/master/example_errors_screenshot.png)
 
 ```javascript
 package pure ;
